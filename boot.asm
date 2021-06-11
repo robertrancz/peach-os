@@ -1,9 +1,17 @@
 ORG 0
 BITS 16
 
-jmp 0x7c0:start     ; set the code segment to 0x7c0
+; Reserve 33 bytes for BIOS Parameter Block (BPM) to avoid damaging code by some bioses
+; For details see https://wiki.osdev.org/FAT
+_start:
+    jmp short start
+    nop
+times 33 db 0
 
 start:
+    jmp 0x7c0:step2     ; set the code segment to 0x7c0
+
+step2:
     cli     ; clear interrupts
     mov ax, 0x7c0
     mov ds, ax
