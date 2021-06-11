@@ -1,7 +1,18 @@
-ORG 0x7c00
+ORG 0
 BITS 16
 
+jmp 0x7c0:start     ; set the code segment to 0x7c0
+
 start:
+    cli     ; clear interrupts
+    mov ax, 0x7c0
+    mov ds, ax
+    mov es, ax
+    mov ax, 0x00
+    mov ss, ax
+    mov sp, 0x7c00
+    sti     ; enable interrupts
+
     mov si, message ; move the address of the message label into the si register
     call print
     jmp $   ; jump to itself (prevent further execution)
