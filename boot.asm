@@ -1,5 +1,8 @@
-ORG 0
+ORG 0x7c0
 BITS 16
+
+CODE_SEG equ gdt_code - gdt_start
+DATA_SEG equ gdt_data - gdt_start
 
 ; Reserve 33 bytes for BIOS Parameter Block (BPM) to avoid damaging code by some bioses
 ; For details see https://wiki.osdev.org/FAT
@@ -9,41 +12,59 @@ _start:
 times 33 db 0
 
 start:
-    jmp 0x7c0:step2     ; set the code segment to 0x7c0
+    jmp 0:step2     ; set the code segment to 0
 
 step2:
     cli     ; clear interrupts
-    mov ax, 0x7c0
-    mov ds, ax
-    mov es, ax
     mov ax, 0x00
+    mov ds, ax
+    mov es, ax    
     mov ss, ax
     mov sp, 0x7c00
-    sti     ; enable interrupts
+    sti     ; enable interrupts    
+    
+load_protected:
+    cli
+    lgdt[gdt_descriptor]    ; load GDT
+    mov eax, cr0
+    or eax, 0x1
+    mov cr0, eax
+    jmp CODE_SEG:load32
 
-    mov si, message ; move the address of the message label into the si register
-    call print
-    jmp $   ; jump to itself (prevent further execution)
 
-print:
-    mov bx, 0
-.loop:
-    lodsb   
-    cmp al, 0
-    je .done
-    call print_char
-    jmp .loop
-.done:
-    ret
+; GDT https://wiki.osdev.org/Global_Descriptor_Table
+gdt_start:
+gdt_null:
+    dd 0x0
+    dd 0x0
 
-print_char:
-    ; calling bios routine to show a character on the screen
-    ; For details see http://www.ctyme.com/intr/rb-0106.htm
-    mov ah, 0eh    
-    int 0x10        ; Int10/ah=0eh - video teletype output
-    ret
+; offset 0x8
+gdt_code:       ; CS should point to this
+    dw 0xffff   ; Segment limit first 0-15 bits
+    dw 0        ; Base first 0-15 bits
+    db 0        ; Base 16-23 bits
+    db 0x9a     ; Access bytes
+    db 11001111b ; High 4 bit flags and low 4 bit flags
+    db 0        ; Base 24-31 bits
 
-message: db 'Hello world!', 0
+; offset 0x10
+gdt_data:       ; DS, SS, ES, FS, GS should point to this
+    dw 0xffff   ; Segment limit first 0-15 bits
+    dw 0        ; Base first 0-15 bits
+    db 0        ; Base 16-23 bits
+    db 0x92     ; Access bytes
+    db 11001111b ; High 4 bit flags and low 4 bit flags
+    db 0        ; Base 24-31 bits
+
+gdt_end:
+
+gdt_descriptor:
+    dw gdt_end - gdt_start - 1  ; size of the descriptor
+    dd gdt_start                ; offset
+
+[BITS 32]
+load32:
+    jmp $
 
 times 510-($ - $$) db 0     ; fill at least 510 bytes of data
 dw 0xAA55       ; little endian (low-order byte is stored on the starting address) -> this will be 0x55AA
