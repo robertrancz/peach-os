@@ -36,3 +36,7 @@ Note that it might needed to make `./configure`, `./move-if-change` and `mkheade
 - The text screen video memory for colour monitors resides at `0xB8000` (for monochrome monitors it is at address `0xB0000`).
 
 - Text mode memory takes two bytes for every "character" on screen. One is the ASCII code byte, the other the attribute byte. The attribute byte carries the foreground colour in its lowest 4 bits and the background color in its highest 3 bits.
+
+- [See this commit](https://github.com/robertrancz/peach-os/commit/07da95612874e459a2ed84861b0203b9a4269170):
+
+![Dependencies](readme-files/write-char.jpg)
