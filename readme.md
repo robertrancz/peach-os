@@ -59,4 +59,11 @@ Note that it might needed to make `./configure`, `./move-if-change` and `mkheade
     - 0xE for `Type` which is for 80386 32-bit interrupt gate as specified in the table above
     - 0xE for S, DPL and P. 0xE = 0b1110, which means we set S->0, DPL->11 and P->1. Note that DPL is set to 0b11 = 3. (See [ring 3 privilege level](https://en.wikipedia.org/wiki/Protection_ring))
 
+## IO
+- Add support to implement I/O operations from C. See [this commit](https://github.com/robertrancz/peach-os/commit/7c89723be236080b9be8256272193f04d7254fd0).
+
+![Dependencies](readme-files/io.jpg)
+
+- For more details, see the x86 reference for [IN](https://c9x.me/x86/html/file_module_x86_id_139.html) and [OUT](https://c9x.me/x86/html/file_module_x86_id_222.html) instruction.
+
 
