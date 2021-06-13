@@ -56,7 +56,7 @@ Note that it might needed to make `./configure`, `./move-if-change` and `mkheade
 ![Dependencies](readme-files/idt.jpg)
 
 - So, basically `type_attr` will set the following:
--- 0xE for `Type` which is for 80386 32-bit interrupt gate as specified in the table above
--- 0xE for S, DPL and P. OxE = 0b1110, which means we set S->0, DPL->11 and P->1. Note that DPL is set to 0b11 = 3. (See [ring 3 privilege level](https://en.wikipedia.org/wiki/Protection_ring))
+    - 0xE for `Type` which is for 80386 32-bit interrupt gate as specified in the table above
+    - 0xE for S, DPL and P. OxE = 0b1110, which means we set S->0, DPL->11 and P->1. Note that DPL is set to 0b11 = 3. (See [ring 3 privilege level](https://en.wikipedia.org/wiki/Protection_ring))
 
 
