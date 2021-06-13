@@ -20,6 +20,7 @@
 - After enabling protected mode, the kernel is running in 32bit mode, we can no longer access the BIOS. We need to write a disk driver if we want to read from the disk.
 
 ## [Creating a cross compiler](https://wiki.osdev.org/GCC_Cross-Compiler)
+- A cross-compiler is needed for operating system development. This compiler that we build here will have a generic target `(i686-elf)` what allows you to leave the current operating system behind, meaning that no headers or libraries of your host operating system will be used.
 - Install the following packages:
 
 ![Dependencies](readme-files/deps.jpg)
@@ -30,3 +31,8 @@ Note that it might needed to make `./configure`, `./move-if-change` and `mkheade
 - If everything is going well, at the end the cross compiler should be available in your `~/opt/cross` directory:
 
 ![Dependencies](readme-files/cross-compiler.jpg)
+
+## [Writing to the screen](https://wiki.osdev.org/Printing_to_Screen)
+- The text screen video memory for colour monitors resides at `0xB8000` (for monochrome monitors it is at address `0xB0000`).
+
+- Text mode memory takes two bytes for every "character" on screen. One is the ASCII code byte, the other the attribute byte. The attribute byte carries the foreground colour in its lowest 4 bits and the background color in its highest 3 bits.
