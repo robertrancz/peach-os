@@ -2,7 +2,7 @@
 ## Overview
 - Multithreaded kernel
 
-## Enable protected mode
+## Enable [protected mode](https://wiki.osdev.org/Protected_Mode)
 - Check protected mode enabled:
 
 `gdb`
@@ -37,6 +37,26 @@ Note that it might needed to make `./configure`, `./move-if-change` and `mkheade
 
 - Text mode memory takes two bytes for every "character" on screen. One is the ASCII code byte, the other the attribute byte. The attribute byte carries the foreground colour in its lowest 4 bits and the background color in its highest 3 bits.
 
-- [See this commit](https://github.com/robertrancz/peach-os/commit/07da95612874e459a2ed84861b0203b9a4269170):
+- [See this commit](https://github.com/robertrancz/peach-os/commit/07da95612874e459a2ed84861b0203b9a4269170) and the result:
 
 ![Dependencies](readme-files/write-char.jpg)
+
+## [Interrupt Descriptor Table](https://wiki.osdev.org/Interrupt_Descriptor_Table)
+- Describes how interrupts are invoked in protected mode
+- The interrupt descriptor structure is set up as follows:
+
+![Dependencies](readme-files/idt-set.jpg)
+
+- Note that `type_attr` sets the following bits in the IDT:
+
+![Dependencies](readme-files/type-attr-bits.jpg)
+
+- The IDT structure:
+
+![Dependencies](readme-files/idt.jpg)
+
+- So, basically `type_attr` will set the following:
+-- 0xE for `Type` which is for 80386 32-bit interrupt gate as specified in the table above
+-- 0xE for S, DPL and P. OxE = 0b1110, which means we set S->0, DPL->11 and P->1. Note that DPL is set to 0b11 = 3. (See [ring 3 privilege level](https://en.wikipedia.org/wiki/Protection_ring))
+
+
