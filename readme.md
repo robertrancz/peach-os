@@ -67,9 +67,21 @@ Note that it might needed to make `./configure`, `./move-if-change` and `mkheade
 - For more details, see the x86 reference for [IN](https://c9x.me/x86/html/file_module_x86_id_139.html) and [OUT](https://c9x.me/x86/html/file_module_x86_id_222.html) instruction.
 
 ## The heap and memory allocation
-The memory gets allocated on the heap in chunks of 4096 byte blocks. <br />
+The memory gets allocated on the heap in chunks of 4096 byte blocks (4096 byte = 1 page). <br />
 As seen below, after the first allocated block is freed up, it is re-allocated on the next request (if the requested size fits into the freed up block(s)):
 
 ![Dependencies](readme-files/mem-alloc.jpg)
 
+- See heap and malloc implementation in [this commit](https://github.com/robertrancz/peach-os/commit/cbd1cad70b0254621282742c91bd3544d0359004)
+
+## [Memory paging](https://wiki.osdev.org/Paging)
+- Paging allows to remap memory addresses to point to other memory addresses
+- Can be used to provide the illusion the maximum amount of RAM is installed
+- Can be used to hide memory from other processes
+- Paging works in 4096 byte block sizes by default
+- Page Directory Structure (bits):
+
+![Dependencies](readme-files/page-directory-structure.jpg)
+
+- See paging implementation in [this commit](https://github.com/robertrancz/peach-os/commit/d5a4728122611541786199278ed7f51af383167d)
 
