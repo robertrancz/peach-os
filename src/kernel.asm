@@ -30,8 +30,6 @@ _start:
     out 0x21, al
     ; End remap the master Programmable Interrupt Controller (PIC)
 
-    sti     ; Enable interrupts
-
     call kernel_main
 
     jmp $

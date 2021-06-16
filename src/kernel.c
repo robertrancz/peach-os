@@ -82,8 +82,10 @@ void kernel_main()
     // Initialize the heap
     kheap_init();
 
-    // Initialize the Interrupt Description Table
+    // Initialize the Interrupt Descriptor Table
     idt_init();
+
+    enable_interrupts();
 
     //outb(0x60, 0xff);
 
