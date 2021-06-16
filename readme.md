@@ -66,4 +66,10 @@ Note that it might needed to make `./configure`, `./move-if-change` and `mkheade
 
 - For more details, see the x86 reference for [IN](https://c9x.me/x86/html/file_module_x86_id_139.html) and [OUT](https://c9x.me/x86/html/file_module_x86_id_222.html) instruction.
 
+## The heap and memory allocation
+The memory gets allocated on the heap in chunks of 4096 byte blocks. <br />
+As seen below, after the first allocated block is freed up, it is re-allocated on the next request (if the requested size fits into the freed up block(s)):
+
+![Dependencies](readme-files/mem-alloc.jpg)
+
 
