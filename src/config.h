@@ -11,4 +11,6 @@
 #define PEACHOS_HEAP_ADDRESS 0x01000000     // extended memory space - free RAM. See https://wiki.osdev.org/Memory_Map
 #define PEACHOS_HEAP_TABLE_ADDRESS 0x00007E00   // Real mode address space - 480.5KiB usable memory at this address
 
+#define PEACHOS_SECTOR_SIZE 512
+
 #endif

@@ -85,3 +85,6 @@ As seen below, after the first allocated block is freed up, it is re-allocated o
 
 - See paging implementation in [this commit](https://github.com/robertrancz/peach-os/commit/d5a4728122611541786199278ed7f51af383167d)
 
+## Reading from the disk in C with the ATA controller
+- [The ATA command matrix](https://wiki.osdev.org/ATA_Command_Matrix)
+

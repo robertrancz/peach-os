@@ -86,6 +86,9 @@ void kernel_main()
     // Initialize the heap
     kheap_init();
 
+    // Search and initialize the disks
+    disk_search_and_init();
+
     // Initialize the Interrupt Descriptor Table
     idt_init();
 
@@ -117,7 +120,4 @@ void kernel_main()
     // ptr5[1] = 'i';
     // print(ptr5);    // this points to 0x1000 which is a virtual memory address
     // print(ptr);     // this points to the physical memory address
-
-    char buf[512];
-    disk_read_sector(0, 1, buf);
 }
